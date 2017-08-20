@@ -7,7 +7,7 @@ const router = require('./router');
 const mongoose = require('mongoose');
 
 // Db setup
-mogoose.connect('mongodb://localhost:auth/auth'); // creates an 'auth' database
+mongoose.connect('mongodb://localhost:auth/auth'); // creates an 'auth' database
 
 // App setup
 const app = express();

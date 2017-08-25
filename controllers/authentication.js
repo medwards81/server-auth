@@ -12,21 +12,21 @@ exports.signin = function(req, res, next) {
 	// User has already had their email and password auth'd
 	// We just need to give them a token
 	// passport is kind enough to provide us the user model in the request
-	res.send({ token: tokenForUser(req.user) });
+	res.json({ token: tokenForUser(req.user) });
 }
 
-exports.signup = function(req, res, next) {
+exports.register = function(req, res, next) {
 	const email = req.body.email;
 	const password = req.body.password;
 
-	if (!email || !password) return res.status(422).send({ error: 'You must provide email and password' });
+	if (!email || !password) return res.status(422).json({ error: 'You must provide email and password' });
 
 	// See if a user with the given email exists
 	User.findOne({ email: email }, function(err, existingUser) {
 		if (err) return next(err);
 
 		// If a user with email does exist, then return an error
-		if (existingUser) return res.status(422).send({ error: 'Email is in use' });
+		if (existingUser) return res.status(422).json({ error: 'Email is in use' });
 
 		// If a user with email does not exist, then create and save user record
 		const user = new User({
@@ -40,6 +40,5 @@ exports.signup = function(req, res, next) {
 			// Respond to request indicating the user was createed
 			res.json({ token: tokenForUser(user) });
 		});
-
 	});
 }

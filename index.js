@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const router = require('./router');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // Db setup
 mongoose.connect('mongodb://localhost:auth/auth'); // creates an 'auth' database
@@ -13,6 +14,7 @@ mongoose.connect('mongodb://localhost:auth/auth'); // creates an 'auth' database
 const app = express();
 // load our middlewares
 app.use(morgan('combined')); // logs http requests
+app.use(cors()); // allows options to exclude specific domains if required for your project
 app.use(bodyParser.json({ type: '*/*' })); // helps parse incoming http requests
 router(app);
 
